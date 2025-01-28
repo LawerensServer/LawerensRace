@@ -1,0 +1,4 @@
+name: LawerensRace
+version: '1.0'
+main: com.lawerens.race.LawerensRace
+api-version: '1.20'
