@@ -1,13 +1,23 @@
 package com.lawerens.race;
 
+import com.lawerens.race.model.RaceConfig;
+import com.lawerens.race.model.RaceInfo;
+import com.lawerens.race.model.Rollback;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
+import static com.lawerens.race.utils.CommonsUtils.sendMessageWithPrefix;
 
 public final class LawerensRace extends JavaPlugin {
 
     private static LawerensRace INSTANCE;
-    private ParkourInfo parkourInfo;
+    private RaceInfo raceInfo;
     private final Map<UUID, Rollback> rollbacks = new HashMap<>();
-    private ParkourConfig parkourConfig;
+    private RaceConfig raceConfig;
     private GameManager gameManager;
 
     public static LawerensRace get() {
@@ -20,14 +30,14 @@ public final class LawerensRace extends JavaPlugin {
 
         INSTANCE = this;
 
-        parkourInfo = new ParkourInfo();
-        parkourConfig = new ParkourConfig(this);
+        raceInfo = new RaceInfo();
+        raceConfig = new RaceConfig(this);
         sendMessageWithPrefix(Bukkit.getConsoleSender(), "PARKOUR EVENTO", "&fCargando configuración...");
 
-        parkourConfig.registerConfig();
-        parkourConfig.load();
+        raceConfig.registerConfig();
+        raceConfig.load();
 
-        getCommand("lesetup").setExecutor(new EventSetupCommand());
+        getCommand("lrsetup").setExecutor(new EventSetupCommand());
         getCommand("evento").setExecutor(new EventCommand());
 
         getServer().getPluginManager().registerEvents(new PreGameListener(), this);
