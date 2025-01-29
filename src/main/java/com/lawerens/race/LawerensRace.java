@@ -49,6 +49,7 @@ public final class LawerensRace extends JavaPlugin implements LawerensEvent {
         raceConfig.load();
 
         getCommand("lcsetup").setExecutor(new EventSetupCommand());
+        getCommand("lcsetup").setTabCompleter(new EventSetupCommand());
 
         getServer().getPluginManager().registerEvents(new PreGameListener(), this);
         getServer().getPluginManager().registerEvents(new GameListener(), this);

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -18,7 +19,8 @@ import java.util.List;
 public class RaceInfo {
 
     private @Nullable Location startLocation, lobbyLocation;
-    private List<RaceCuboid> points = new ArrayList<>();
+    private @NotNull List<Location> vehiclesPositions;
+    private List<RaceCuboid> points;
     private @Nullable RaceCuboid finishCuboid;
 
 }

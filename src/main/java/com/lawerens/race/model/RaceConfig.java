@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Objects;
 
 import static com.lawerens.race.utils.CommonsUtils.sendMessageWithPrefix;
+import static com.lawerens.race.utils.CommonsUtils.stringToLocation;
 import static xyz.lawerens.utils.LawerensUtils.locationToString;
 
 public class RaceConfig extends LawerensConfig {
@@ -28,6 +29,7 @@ public class RaceConfig extends LawerensConfig {
 
             Location l1 = null, l2 = null;
             List<RaceCuboid> points = new ArrayList<>();
+            List<Location> vehiclesPositions = new ArrayList<>();
             RaceCuboid cuboid = null;
 
             if (s.getConfigurationSection("SpawnLocation") != null) {
@@ -56,9 +58,17 @@ public class RaceConfig extends LawerensConfig {
                 );
             }
 
+            sendMessageWithPrefix(Bukkit.getConsoleSender(), "PARKOUR EVENTO", "&fCargando puntos de vehiculos...");
+            for (String str : s.getStringList("VehiclesPositions")) {
+                vehiclesPositions.add(
+                        stringToLocation(str)
+                );
+            }
+
             LawerensRace.get().getRaceInfo().setStartLocation(l1);
             LawerensRace.get().getRaceInfo().setLobbyLocation(l2);
             LawerensRace.get().getRaceInfo().setPoints(points);
+            LawerensRace.get().getRaceInfo().setVehiclesPositions(vehiclesPositions);
             LawerensRace.get().getRaceInfo().setFinishCuboid(cuboid);
         });
     }
@@ -84,6 +94,12 @@ public class RaceConfig extends LawerensConfig {
             points.add(locationToString(point.firstPoint())+":"+locationToString(point.secondPoint()));
         }
 
+        List<String> vehicles = new ArrayList<>();
+        for (Location vp : LawerensRace.get().getRaceInfo().getVehiclesPositions()) {
+            vehicles.add(locationToString(vp));
+        }
+
+        s.set("VehiclesPositions", vehicles);
         s.set("Points", points);
 
         saveConfig();

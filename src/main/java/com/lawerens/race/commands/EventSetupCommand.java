@@ -43,6 +43,12 @@ public class EventSetupCommand implements TabExecutor {
             sendMessageWithPrefix(sender, "EVENTO", "&fActualizaste la localización del lobby.");
 
         }
+        else if (args[0].equalsIgnoreCase("addvehicleposition")) {
+            LawerensRace.get().getRaceInfo().getVehiclesPositions().add(p.getLocation().toCenterLocation());
+            LawerensRace.get().getRaceConfig().save();
+            sendMessageWithPrefix(sender, "EVENTO", "&fAñadiste una nueva posición para un vehiculo.");
+
+        }
         else if(args[0].equalsIgnoreCase("enable")){
             if(LawerensRace.get().getRaceInfo().getFinishCuboid() == null || LawerensRace.get().getRaceInfo().getStartLocation() == null || LawerensRace.get().getRaceInfo().getLobbyLocation() == null){
                 sendMessageWithPrefix(sender, "EVENTO", "&cEl punto de inicio, lobby y material de meta no están definidos.");
@@ -101,6 +107,11 @@ public class EventSetupCommand implements TabExecutor {
 
             LawerensRace.get().getRaceConfig().save();
             sendMessageWithPrefix(sender, "EVENTO", "&fActualizaste la región de la línea de meta.");
+        }
+        else if(args[0].equalsIgnoreCase("reload")){
+            LawerensRace.get().getRaceConfig().load();
+            sendMessageWithPrefix(sender, "EVENTO", "&fConfiguración recargada.");
+
         }
         else if(args[0].equalsIgnoreCase("addpoint")){
             if(pos1.get(p.getUniqueId()) == null || pos2.get(p.getUniqueId()) == null){
