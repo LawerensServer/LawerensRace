@@ -1,15 +1,12 @@
 package com.lawerens.race.model;
 
-import lombok.Data;
 import org.bukkit.Location;
 import xyz.lawerens.utils.LawerensUtils;
 
-@Data
-public class RaceCheckpoint {
+public record RaceCuboid(Location firstPoint, Location secondPoint) {
 
-    private Location firstPoint, secondPoint;
-
-    public boolean isInside(Location location) {
+    public boolean isInCuboid(Location location) {
         return LawerensUtils.isLocationInCuboid(location, firstPoint, secondPoint);
     }
+
 }
